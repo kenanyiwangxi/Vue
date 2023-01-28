@@ -1,0 +1,26 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <button id="btn">点我创建一个输入框</button>
+    <script>
+        const btn = document.querySelector('#btn')
+        btn.addEventListener('click',() => {
+            const input = document.createElement('input')
+            // input.focus()  不奏效
+            // input.parentElement.style.backgroundColor = 'skyblue' 不奏效
+            input.className = ''
+            input.value = 99
+            input.onclick = () => alert(1)
+            document.body.appendChild(input)
+            input.focus()
+            input.parentElement.style.backgroundColor = 'skyblue'
+        })
+    </script>
+</body>
+</html>

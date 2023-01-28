@@ -1,0 +1,27 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue检测数据改变的原理_对象</title>
+    <!--    引入Vue-->
+    <script src="../vue.js"></script>
+</head>
+<body>
+<!--准备好一个容器-->
+<div id="root">
+    <h2>学校名称；{{name}}</h2>
+    <h2>学校名称；{{address}}</h2>
+</div>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        data: {
+            name: '孙悟空',
+            address: '花果山'
+        }
+    })
+</script>
+</body>
+</html>

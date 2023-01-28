@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>分析生命周期</title>
+    <!--引入Vue-->
+    <script src="../vue.js"></script>
+</head>
+<body>
+<!--准备好一个容器-->
+<div id="root" :x="n">
+    <h2>当前的n值是{{n}}</h2>
+    <button @click="add">点我n+1</button>
+    <button @click="bye">点我销毁vm</button>
+</div>
+<script>
+    const vm = new Vue({
+        el: '#root',
+        // template: `<div><h2>当前的n值是{{n}}</h2>
+        // <button @click="add">点我n+1</button></div>`,
+        data: {
+            n:1
+        },
+        methods: {
+            add() {
+                console.log('调用了add')
+                this.n++
+            },
+            bye() {
+                console.log('调用了bye')
+                this.$destroy()
+            }
+        },
+        watch: {
+          n() {
+              console.log('n改变了')
+          }
+        },
+        // ————初始化过程开始
+        // 无法通过vm访问data中的数据、methods中的方法
+        beforeCreate() {
+            console.log('beforeCreate')
+        },
+        // 可以通过vm访问data中的数据、methods中的方法
+        created() {
+            console.log('created')
+        },
+        // 1.此时页面呈现的是未经Vue编译的DOM结构 2.所有对DOM的操作，最终都不奏效
+        beforeMount() {
+            console.log('beforeMount')
+        },
+        // 1.页面中呈现的是经过Vue编译的DOM 2.对DOM操作均有效(尽可能避免)
+        mounted() {
+            console.log('mounted')
+        },
+        // ————初始化过程结束
+
+        // ————更新过程开始
+        // 此时数据是 新的 ，但页面是 旧的，即页面尚未和数据保持同步
+        beforeUpdate() {
+            console.log('beforeUpdate')
+        },
+        // 此时数据是 新的 ，页面也是 新的，即页面和数据保持同步
+        updated() {
+            console.log('updated')
+        },
+        // ————更新过程结束
+
+        // ————销毁过程开始
+        // 注意：在销毁过程中对数据修改不会在进行更新
+        // 此时vm中所有的：data、methods、指令等等，都处于可以状态，马上要执行销毁操作
+        // 一般在此阶段：关闭定时器、取消订阅消息、解绑自定义事件等 收尾操作
+        beforeDestroy() {
+            console.log('beforeDestroy')
+            console.log(this.n)
+            this.add()
+        },
+        destroyed() {
+            console.log('destroyed')
+        }
+
+        // ————销毁过程结束
+
+    })
+</script>
+</body>
+</html>
